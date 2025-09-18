@@ -10,7 +10,7 @@ input:
   
 processing:
   batch_size: 64  # You can change this: 32, 64, 128, 256
-  dry_run: true  # Set to true for testing without API calls
+  dry_run: false  # Set to true for testing without API calls
 
 output:
   directory: "runs"
