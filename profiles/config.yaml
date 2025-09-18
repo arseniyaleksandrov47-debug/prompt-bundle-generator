@@ -15,7 +15,7 @@ api:
   backoff_factor: 2
 
 processing:
-  batch_size: 64
+  batch_size: 64  # Can be changed: 32, 64, 128, 256 (higher = faster but more memory)
   max_concurrent_shards: 10
   max_concurrent_patches: 5
   patch_iterations_limit: 2
