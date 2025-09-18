@@ -1,0 +1,57 @@
+
+input:
+  min_prompt_length: 50
+  max_prompt_length: 2000
+  forbidden_patterns:
+    - "lorem ipsum"
+    - "placeholder text"
+    - "sample content"
+
+api:
+  max_rps_per_key: 30
+  max_tpm_per_key: 6000
+  request_timeout: 60
+  max_retries: 3
+  backoff_factor: 2
+
+processing:
+  batch_size: 64
+  max_concurrent_shards: 10
+  max_concurrent_patches: 5
+  patch_iterations_limit: 2
+
+quality:
+  min_score_threshold: 9.5
+  release_success_rate: 0.98
+  spot_llm_threshold: 0.15
+  patch_llm_threshold: 0.05
+
+cache:
+  bloom_capacity: 100000
+  bloom_error_rate: 0.1
+  cache_ttl_hours: 24
+  target_hit_rate: 0.7
+
+performance:
+  target_throughput: 16.67  # items per second (~1 min/1000 prompts)
+  max_processing_time: 300  # seconds
+  memory_limit_mb: 2048
+
+output:
+  min_artifacts: 120
+  supported_storefronts:
+    - etsy
+    - gumroad
+    - kofi
+  supported_languages:
+    - en
+    - ru
+    - es
+    - fr
+    - de
+
+logging:
+  level: INFO
+  console: true
+  file: true
+  metrics: true

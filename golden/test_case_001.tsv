@@ -1,0 +1,4 @@
+id	prompt	meta	expected_score	expected_flags
+golden_001	Create a detailed business plan for a tech startup including market analysis, financial projections, and growth strategy	language=en; channel=business; length=800	9.8	""
+golden_002	Write a professional email subject line for a product launch announcement	language=en; channel=email; length=50	9.6	""
+golden_003	Develop a comprehensive social media strategy with specific KPIs and measurement methods	language=en; channel=social; length=600	9.7	""

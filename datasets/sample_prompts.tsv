@@ -1,0 +1,11 @@
+id	prompt	meta	out	score	flags
+prompt_001	Create a comprehensive business strategy for digital transformation	language=en; channel=business; length=500	""	0.0	""
+prompt_002	Develop a marketing campaign for a new product launch	language=en; channel=marketing; length=300	""	0.0	""
+prompt_003	Write a professional email template for client outreach	language=en; channel=email; length=200	""	0.0	""
+prompt_004	Design a social media content strategy for brand awareness	language=en; channel=social; length=400	""	0.0	""
+prompt_005	Create a project management framework for remote teams	language=en; channel=business; length=600	""	0.0	""
+prompt_006	Develop a customer service training program outline	language=en; channel=training; length=450	""	0.0	""
+prompt_007	Write a sales presentation template for B2B clients	language=en; channel=sales; length=350	""	0.0	""
+prompt_008	Create a content calendar for quarterly marketing campaigns	language=en; channel=marketing; length=250	""	0.0	""
+prompt_009	Design a performance review process for employees	language=en; channel=hr; length=400	""	0.0	""
+prompt_010	Develop a crisis communication plan for organizations	language=en; channel=communication; length=500	""	0.0	""
