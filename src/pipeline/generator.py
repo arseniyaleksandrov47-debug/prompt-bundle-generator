@@ -9,8 +9,8 @@ from dataclasses import dataclass
 import httpx
 import logging
 
-from ..core.sharding import Shard, ShardItem
-from ..pipeline.topic_profiling import TopicProfile
+from core.sharding import Shard, ShardItem
+from pipeline.topic_profiling import TopicProfile
 
 logger = logging.getLogger(__name__)
 

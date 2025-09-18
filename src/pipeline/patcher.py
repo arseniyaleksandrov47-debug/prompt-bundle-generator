@@ -9,7 +9,7 @@ from dataclasses import dataclass
 import httpx
 import logging
 
-from ..core.sharding import ShardItem
+from core.sharding import ShardItem
 
 logger = logging.getLogger(__name__)
 

@@ -10,9 +10,9 @@ from pathlib import Path
 import httpx
 import logging
 
-from ..core.sharding import ShardItem
-from ..pipeline.dedup import DedupResult
-from ..pipeline.topic_profiling import TopicProfile
+from core.sharding import ShardItem
+from pipeline.dedup import DedupResult
+from pipeline.topic_profiling import TopicProfile
 
 logger = logging.getLogger(__name__)
 

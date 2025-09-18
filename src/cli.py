@@ -10,7 +10,7 @@ import click
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from main import main as main_pipeline
+from main import run_pipeline
 
 
 @click.group()
@@ -50,7 +50,7 @@ def generate(
 ):
     """Generate a complete prompt bundle"""
     
-    result = asyncio.run(main_pipeline(
+    result = asyncio.run(run_pipeline(
         topic=topic,
         input_file=input_file,
         output_dir=output_dir,

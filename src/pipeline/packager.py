@@ -9,10 +9,10 @@ from typing import List, Dict, Any
 import yaml
 import logging
 
-from ..core.sharding import ShardItem
-from ..pipeline.evaluator import EvaluationResult
-from ..pipeline.topic_profiling import TopicProfile
-from ..utils.metrics import MetricsCollector
+from core.sharding import ShardItem
+from pipeline.evaluator import EvaluationResult
+from pipeline.topic_profiling import TopicProfile
+from utils.metrics import MetricsCollector
 
 logger = logging.getLogger(__name__)
 

@@ -8,8 +8,8 @@ from dataclasses import dataclass
 from collections import defaultdict
 import logging
 
-from ..core.sharding import Shard, ShardItem
-from ..pipeline.generator import GenerationResult
+from core.sharding import Shard, ShardItem
+from pipeline.generator import GenerationResult
 
 logger = logging.getLogger(__name__)
 

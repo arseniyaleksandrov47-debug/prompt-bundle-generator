@@ -11,35 +11,21 @@ from typing import Optional
 import click
 import yaml
 
-from .pipeline.intake import IntakeProcessor
-from .pipeline.topic_profiling import TopicProfiler
-from .pipeline.generator import PromptGenerator
-from .pipeline.dedup import DeduplicatorProcessor
-from .pipeline.evaluator import QualityEvaluator
-from .pipeline.patcher import PromptPatcher
-from .pipeline.packager import BundlePackager
-from .core.key_manager import GroqKeyManager
-from .core.cache import CacheManager
-from .core.sharding import ShardManager
-from .utils.logger import setup_logger
-from .utils.metrics import MetricsCollector
+from pipeline.intake import IntakeProcessor
+from pipeline.topic_profiling import TopicProfiler
+from pipeline.generator import PromptGenerator
+from pipeline.dedup import DeduplicatorProcessor
+from pipeline.evaluator import QualityEvaluator
+from pipeline.patcher import PromptPatcher
+from pipeline.packager import BundlePackager
+from core.key_manager import GroqKeyManager
+from core.cache import CacheManager
+from core.sharding import ShardManager
+from utils.logger import setup_logger
+from utils.metrics import MetricsCollector
 
 
-@click.command()
-@click.option('--topic', required=True, help='Topic brief (free text)')
-@click.option('--input', 'input_file', required=True, type=click.Path(exists=True), help='Input TSV file with prompts')
-@click.option('--output', 'output_dir', default='./runs', help='Output directory for runs')
-@click.option('--config', 'config_file', default='./profiles/config.yaml', help='Configuration file')
-@click.option('--keys', 'keys_file', default='./profiles/keys.tsv', help='Groq API keys file')
-@click.option('--golden', 'golden_dir', default='./golden', help='Golden test cases directory')
-@click.option('--cache-dir', default='./cache', help='Cache directory')
-@click.option('--temp-dir', default='./tmp', help='Temporary files directory')
-@click.option('--target-count', default=1000, type=int, help='Target number of prompts')
-@click.option('--batch-size', default=64, type=int, help='Batch size for processing')
-@click.option('--language', default='en', help='Output language')
-@click.option('--storefront', default='etsy', help='Target storefront (etsy/gumroad/kofi)')
-@click.option('--dry-run', is_flag=True, help='Dry run without API calls')
-async def main(
+async def run_pipeline(
     topic: str,
     input_file: str,
     output_dir: str,
@@ -80,8 +66,12 @@ async def main(
         
         logger.info("🔧 Initializing core components...")
         
-        key_manager = GroqKeyManager(keys_file)
-        await key_manager.initialize()
+        if not dry_run:
+            key_manager = GroqKeyManager(keys_file)
+            await key_manager.initialize()
+        else:
+            key_manager = None
+            logger.info("🧪 Dry run mode: Skipping API key initialization")
         
         cache_manager = CacheManager(cache_dir)
         await cache_manager.initialize()
@@ -260,5 +250,53 @@ def calculate_quality_stats(shards):
     }
 
 
+@click.command()
+@click.option('--topic', required=True, help='Topic brief (free text)')
+@click.option('--input', 'input_file', required=True, type=click.Path(exists=True), help='Input TSV file with prompts')
+@click.option('--output', 'output_dir', default='./runs', help='Output directory for runs')
+@click.option('--config', 'config_file', default='./profiles/config.yaml', help='Configuration file')
+@click.option('--keys', 'keys_file', default='./profiles/keys.tsv', help='Groq API keys file')
+@click.option('--golden', 'golden_dir', default='./golden', help='Golden test cases directory')
+@click.option('--cache-dir', default='./cache', help='Cache directory')
+@click.option('--temp-dir', default='./tmp', help='Temporary files directory')
+@click.option('--target-count', default=1000, type=int, help='Target number of prompts')
+@click.option('--batch-size', default=64, type=int, help='Batch size for processing')
+@click.option('--language', default='en', help='Output language')
+@click.option('--storefront', default='etsy', help='Target storefront (etsy/gumroad/kofi)')
+@click.option('--dry-run', is_flag=True, help='Dry run without API calls')
+def main(
+    topic: str,
+    input_file: str,
+    output_dir: str,
+    config_file: str,
+    keys_file: str,
+    golden_dir: str,
+    cache_dir: str,
+    temp_dir: str,
+    target_count: int,
+    batch_size: int,
+    language: str,
+    storefront: str,
+    dry_run: bool
+):
+    """Main pipeline orchestrator CLI command"""
+    result = asyncio.run(run_pipeline(
+        topic=topic,
+        input_file=input_file,
+        output_dir=output_dir,
+        config_file=config_file,
+        keys_file=keys_file,
+        golden_dir=golden_dir,
+        cache_dir=cache_dir,
+        temp_dir=temp_dir,
+        target_count=target_count,
+        batch_size=batch_size,
+        language=language,
+        storefront=storefront,
+        dry_run=dry_run
+    ))
+    sys.exit(result)
+
+
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
