@@ -1,0 +1,22 @@
+project:
+  topic: "Email marketing prompts for small businesses"
+  target_count: 1000
+  language: "en"
+  storefront: "etsy"  # etsy, gumroad, kofi
+
+input:
+  file: "datasets/sample_prompts.tsv"
+  
+processing:
+  batch_size: 64  # You can change this: 32, 64, 128, 256
+  dry_run: true  # Set to true for testing without API calls
+
+output:
+  directory: "runs"
+
+advanced:
+  config_file: "profiles/config.yaml"
+  keys_file: "profiles/keys.tsv"
+  golden_dir: "golden"
+  cache_dir: "cache"
+  temp_dir: "tmp"
